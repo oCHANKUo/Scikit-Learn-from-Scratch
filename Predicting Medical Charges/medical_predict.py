@@ -1,6 +1,10 @@
 # Linear Regression
 from urllib.request import urlretrieve
 import pandas as pd
+import plotly.express as px
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 # Step 1: Import the dataset and save as a CSV.
@@ -13,4 +17,4 @@ medical_df = pd.read_csv('medical.csv')
 
 # medical_df.info() # Check the data types
 stat_info = medical_df.describe() # Statistical summary
-print(stat_info)
+print(stat_info) 
