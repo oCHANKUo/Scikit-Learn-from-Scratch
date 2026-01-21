@@ -81,14 +81,23 @@ def plot_graph(*graph_names):
                              title='Age vs. Charges')
             fig.update_traces(marker_size=5)
 
+        elif graph_name == "bmi_vs_charges":
+            fig = px.scatter(medical_df,
+                             x='bmi',
+                             y='charges',
+                             hover_data=['sex'],
+                             opacity=0.7,
+                             title='BMI vs Charges')
+            fig.update_traces(marker_size=5)
+
         else:
             print("Graph name not recognised")
     
     plt.show()
     fig.show()
 
-# age, bmi, charges, smoker_by_sex, age_vs_charges
-plot_graph("age_vs_charges")
+# age, bmi, charges, smoker_by_sex, age_vs_charges, bmi_vs_charges
+plot_graph("bmi_vs_charges")
 
 # Count for each category, no or yes in this case
 # print(medical_df.smoker.value_counts())
