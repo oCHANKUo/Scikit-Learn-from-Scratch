@@ -55,7 +55,6 @@ def plot_graph(*graph_names):
             male = medical_df[medical_df['sex'] == 'male']['charges']
             female = medical_df[medical_df['sex'] == 'female']['charges']
 
-
             plt.figure()
             plt.hist(smoker, bins=30, color='green', alpha=0.7, label='Smoker')
             plt.hist(non_smoker, bins=30, color='grey', alpha=0.7, label='Non Smoker')
@@ -63,11 +62,33 @@ def plot_graph(*graph_names):
             plt.xlabel('Charges')
             plt.ylabel('Count')
             plt.legend()
-            
+        
+        elif graph_name == "smoker_by_sex":
+            grouped = medical_df.groupby(['smoker', 'sex']).size().unstack()
+
+            grouped.plot(kind='bar', color=['pink', 'blue'], alpha=0.7)
+            plt.xlabel('Smoker')
+            plt.ylabel('Count')
+            plt.title('Smoker Distribution by Sex')
+            plt.legend(title='sex')
+        elif graph_name == "age_vs_charges":
+            fig = px.scatter(medical_df,
+                             x='age',
+                             y='charges',
+                             color='smoker',
+                             opacity=0.7,
+                             hover_data=['sex'],
+                             title='Age vs. Charges')
+            fig.update_traces(marker_size=5)
+
         else:
             print("Graph name not recognised")
     
     plt.show()
+    fig.show()
 
-# age, bmi, charges
-plot_graph("charges")
+# age, bmi, charges, smoker_by_sex, age_vs_charges
+plot_graph("age_vs_charges")
+
+# Count for each category, no or yes in this case
+# print(medical_df.smoker.value_counts())
