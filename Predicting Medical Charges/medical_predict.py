@@ -25,17 +25,49 @@ matplotlib.rcParams['font.size'] = 14
 matplotlib.rcParams['figure.figsize'] = (10, 6)
 matplotlib.rcParams['figure.facecolor'] = '#00000000'
 
-fig, (ax1, ax2) = plt.subplots(2, 1)
-# Visualise ages in a histogram since age is numeric. Use matplotlib
-ax1.hist(medical_df['age'], bins=47, rwidth=0.9) # bins to account for all the ages 18-64. relative width between each bar
-ax1.set_title('Distribution of Age')
-ax1.set_xlabel('Age')
-ax1.set_ylabel('Count')
+def plot_graph(*graph_names):
+    for graph_name in graph_names:
+        if graph_name == "age":
+            fig, (ax1, ax2) = plt.subplots(2, 1)
 
-# Boxplot
-ax2.boxplot(medical_df['age'], vert=False)
-ax2.set_title('Age Box Plot')
-ax2.set_xlabel('Age')
+            ax1.hist(medical_df['age'], bins=47, rwidth=0.9) # bins to account for all the ages 18-64. relative width between each bar
+            ax1.set_title('Distribution of Age')
+            ax1.set_xlabel('Age')
+            ax1.set_ylabel('Count')
 
-plt.tight_layout()
-plt.show()
+            ax2.boxplot(medical_df['age'], vert=False)
+            ax2.set_title('Age Box Plot')
+            ax2.set_xlabel('Age')
+
+            plt.tight_layout()
+        
+        elif graph_name == "bmi":
+            plt.figure()
+            plt.hist(medical_df['bmi'], bins=47)
+            plt.title('Distribution of BMI')
+            plt.xlabel('BMI')
+            plt.ylabel('Count')
+
+        elif graph_name == "charges":
+            # Split the data
+            smoker = medical_df[medical_df['smoker'] == 'yes']['charges']
+            non_smoker = medical_df[medical_df['smoker'] == 'no']['charges']
+            male = medical_df[medical_df['sex'] == 'male']['charges']
+            female = medical_df[medical_df['sex'] == 'female']['charges']
+
+
+            plt.figure()
+            plt.hist(smoker, bins=30, color='green', alpha=0.7, label='Smoker')
+            plt.hist(non_smoker, bins=30, color='grey', alpha=0.7, label='Non Smoker')
+            plt.title('Annual Medical Charges')
+            plt.xlabel('Charges')
+            plt.ylabel('Count')
+            plt.legend()
+            
+        else:
+            print("Graph name not recognised")
+    
+    plt.show()
+
+# age, bmi, charges
+plot_graph("charges")
