@@ -1,5 +1,6 @@
 from urllib.request import urlretrieve
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import matplotlib
 import matplotlib.pyplot as plt
@@ -46,11 +47,21 @@ def try_parameter(w, b):
 Calculate Residual = Actual Targer - Our Prediction
 Square residual. Since some residuals may contain negative values.
 Calculate the average of all squared_residuals. (sum of all sqr_residuals)/N
+Take the square root off the Average
 Result = Root Mean Squared Error (RMSE)
 '''
+def rmse(targets, predictions):
+    return np.sqrt(np.mean(np.square(targets - predictions)))
 
 if __name__ == "__main__":
 
-    try_parameter(400, -2000)
+    w = 50
+    b = 100
+
+    try_parameter(w, b)
+
+    targets = non_smoker_df['charges']
+    predicted = estimate_charges(non_smoker_df['age'], w, b)
+    print(rmse(targets, predicted))
         
     
