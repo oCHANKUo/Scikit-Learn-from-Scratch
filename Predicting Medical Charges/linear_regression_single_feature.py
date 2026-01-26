@@ -40,6 +40,9 @@ def try_parameter(w, b):
     plt.xlabel('Age')
     plt.ylabel('Charges')
     plt.legend(['Estimate', 'Actual'])
+
+    loss = rmse(target, estimated_charges)
+    print("RMSE Loss: ", loss)
     plt.show()
  
 # Loss/Cost Function
@@ -55,13 +58,9 @@ def rmse(targets, predictions):
 
 if __name__ == "__main__":
 
-    w = 50
-    b = 100
+    w = 350
+    b = -4000
 
-    try_parameter(w, b)
-
-    targets = non_smoker_df['charges']
-    predicted = estimate_charges(non_smoker_df['age'], w, b)
-    print(rmse(targets, predicted))
+    try_parameter(w, b) 
         
     
