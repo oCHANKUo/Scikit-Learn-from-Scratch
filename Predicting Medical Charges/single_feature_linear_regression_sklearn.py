@@ -25,22 +25,22 @@ smoker_targets = smoker_df.charges
 
 # trains the model
 # model.fit(inputs, targets) 
-model2.fit(smoker_inputs, smoker_targets)
+model.fit(smoker_inputs, smoker_targets)
 
 # predictions = model.predict(np.array([[23],
 #                                       [37],
 #                                       [61]]))
 
-predictions = model2.predict(smoker_inputs)
+predictions = model.predict(smoker_inputs)
 
 # w
-w = model2.coef_
+w = model.coef_
 
 # b
-b = model2.intercept_
+b = model.intercept_
 
 if __name__ == "__main__":
     # print(predictions)
     print(w)
     print(b)
-    try_parameter(w, b)
+    try_parameter(w, b, smoker_df)

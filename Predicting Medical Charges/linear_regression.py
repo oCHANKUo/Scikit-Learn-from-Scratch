@@ -30,10 +30,10 @@ def estimate_charges(age, w, b):
     return w * age + b
 
 # Compare our manual estimation with actual relation
-def try_parameter(w, b):
-    ages = non_smoker_df.age 
+def try_parameter(w, b, df):
+    ages = df.age 
     estimated_charges = estimate_charges(ages, w, b)
-    target = non_smoker_df.charges
+    target = df.charges
 
     plt.plot(ages, estimated_charges, 'r', alpha=0.9)
     plt.scatter(ages, target, s=8, alpha=0.8)
@@ -61,6 +61,6 @@ if __name__ == "__main__":
     w = 350
     b = -4000
 
-    try_parameter(w, b) 
+    try_parameter(w, b, non_smoker_df) 
         
     
