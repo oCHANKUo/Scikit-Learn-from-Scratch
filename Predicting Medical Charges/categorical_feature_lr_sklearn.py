@@ -68,3 +68,12 @@ if __name__ == "__main__":
     # sns.barplot(data=medical_df, x='sex', y='charges')
 
     print('-----')
+
+
+'''
+The extra categorical features did not do much of a difference. Maybe we can use 2 seperate models for predictions. 
+One for Smokers
+The other for non-smokers
+with the same features.
+'''
+
