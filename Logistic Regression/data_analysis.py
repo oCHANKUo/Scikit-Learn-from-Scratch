@@ -13,6 +13,13 @@ data_dir = 'weather-dataset-rattle-package'
 train_csv = data_dir + '/weatherAUS.csv'
 
 raw_df = pd.read_csv(train_csv)
+
+# Sampling step is not necessary but can be valuable with large datasets
+use_sample = False
+sample_fraction = 0.1
+if use_sample:
+    raw_df = raw_df.sample(frac=sample_fraction).copy()
+
 # Drop rows where RainToday or RainTomorrow are null
 raw_df.dropna(subset=['RainToday', 'RainTomorrow'], inplace=True)
 

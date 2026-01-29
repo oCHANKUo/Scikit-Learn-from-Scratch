@@ -53,3 +53,14 @@ Why only these 2 are considered?
 - RainTomorrow vs RainToday (There is a bias for RainTomorrow = No records. Meaning it will be easier predicting RainTomorrow = No than Yes)
 - Scatter plot of MinTemp vs MaxTemp
 - Temp at 3 pm vs Humidity at 3 pm (RainTomorrow seems to be Yes when humidity is relatively high and temperature is relatively low)
+
+3. Sampling Step: Not necessary but can be helpful for large datasets.
+
+
+## Machine Learching Phase
+
+1. Split the dataset into 3 parts:
+
+> Training
+> Validation
+> Testing
