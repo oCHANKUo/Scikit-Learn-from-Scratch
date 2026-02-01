@@ -61,6 +61,19 @@ Why only these 2 are considered?
 
 1. Split the dataset into 3 parts:
 
-> Training
-> Validation
-> Testing
+> Training: fit the model
+> Validation: tune and evaluate during training
+> Testing: final performance check
+
+- First Split: 
+  > 80% → training + validation
+  > 20% → test set
+
+- Second Split: 
+  > 75% → training
+  > 25% → validation
+
+- Final Ratio:
+  > Training: 60%
+  > Validation: 20%
+  > Testing: 20%
