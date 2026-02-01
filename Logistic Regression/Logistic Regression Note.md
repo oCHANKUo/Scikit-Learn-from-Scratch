@@ -77,3 +77,8 @@ Why only these 2 are considered?
   > Training: 60%
   > Validation: 20%
   > Testing: 20%
+
+When considering time series data like this, which involves data over a long period of time, it is a good decision to split data based on date instead of being random. It allows for using data from a specific time period for model fitting while using data from the ""future"" for validation and testing. 
+Origin - 2014: Train
+2015: Validation
+2016 - 2017: Testing
