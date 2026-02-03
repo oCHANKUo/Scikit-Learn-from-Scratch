@@ -104,3 +104,29 @@ Origin - 2014: Train
 
 5. Encoding Categorical Data
 > Since machine learning models can only be trained with numeric data, we need to convert catgorical data to numbers. A common technique is *one-hot encoding*
+
+6. Training the Logistic Regression Model
+> Saving: It can be useful to save the preprocessed data to the disk, to avoid repeating preprocessing steps. It can be saved in many different formats such as CSV. In this we save it in the parquet format.
+> Training data can be saved as is, Target data need to be converted into dataframes (in this example)
+> We can read the data back using *pd.read_parquet*
+> Logistic Regression is commonly used to solve Binary Classification
+> The *solver* tells scikit-learn which algorithm to use to find the best weights
+> 'liblinear' is good for small datasets and binary classification problems.
+
+7. Model Evaluation
+> To evaluate the Model, caculate the accuracy using *accuracy_score*
+> The model achieves an accuracy of 85.1% on the training set. We can visualize the breakdown of correctly and incorrectly classified inputs using a confusion matrix.
+> The accuracy of the model on the test and validation set are above 84%, which suggests that our model generalizes well to data it hasn't seen before
+> A good way to verify whether a model has actually learned something useful is to compare its results to a "random" or "dumb" model. Two models: one that guesses randomly and another that always return "No". Both of these models completely ignore the inputs given to them.
+> Our random model achieves an accuracy of 50% and our "always No" model achieves an accuracy of 77%. Our model is better than a "dumb" or "random" model
+
+8. Making Predictions on a Single Input
+> Once the model has been trained to a satisfactory accuracy, it can be used to make predictions on new data.
+> We must apply the same transformations applied while training the model:
+-- Imputation of missing values using the imputer created earlier
+-- Scaling numerical features using the scaler created earlier
+-- Encoding categorical features using the encoder created earlier
+
+
+## Exercise
+Initialize the LogisticRegression model with different arguments and try to achieve a higher accuracy. The arguments used for initializing the model are called hyperparameters (to differentiate them from weights and biases - parameters that are learned by the model during training).

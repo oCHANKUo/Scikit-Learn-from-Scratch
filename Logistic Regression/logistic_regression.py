@@ -8,79 +8,131 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix
+from logistic_regression_preprocessing import categorical_cols, numeric_cols, encoded_cols, imputer, scaler, encoder
 
-data_dir = 'weather-dataset-rattle-package'
-train_csv = data_dir + '/weatherAUS.csv'
 
-raw_df = pd.read_csv(train_csv)
-raw_df.dropna(subset=['RainToday', 'RainTomorrow'], inplace=True)
-
-# train_val_df, test_df = train_test_split(raw_df, test_size=0.2, random_state=42)
-# train_df, val_df = train_test_split(train_val_df, test_size=0.25, random_state=42)
-
-year = pd.to_datetime(raw_df.Date).dt.year
-
-train_df = raw_df[year < 2015]
-val_df = raw_df[year == 2015]
-test_df = raw_df[year > 2015]
-
-input_cols = list(train_df.columns)[1:-1]
 target_col = 'RainTomorrow'
 
-train_inputs = train_df[input_cols].copy()
-train_targets = train_df[target_col].copy()
+train_inputs = pd.read_parquet('train_inputs.parquet')
+val_inputs = pd.read_parquet('val_inputs.parquet')
+test_inputs = pd.read_parquet('test_inputs.parquet')
 
-val_inputs = val_df[input_cols].copy()
-val_targets = val_df[target_col].copy()
+train_targets = pd.read_parquet('train_targets.parquet')[target_col]
+val_targets = pd.read_parquet('val_targets.parquet')[target_col]
+test_targets = pd.read_parquet('test_targets.parquet')[target_col]
 
-test_inputs = test_df[input_cols].copy()
-test_targets = test_df[target_col].copy()
+X_train = train_inputs[numeric_cols + encoded_cols]
+X_val = val_inputs[numeric_cols + encoded_cols]
+X_test = test_inputs[numeric_cols + encoded_cols]
 
-## Identify categorical and Numerical columns
-numeric_cols = train_inputs.select_dtypes(include=np.number).columns.tolist()
-categorical_cols =  train_inputs.select_dtypes('object').columns.tolist()
+## Model Selection
+model = LogisticRegression(solver='liblinear')
+model.fit(train_inputs[numeric_cols + encoded_cols], train_targets)
 
-## Imputation
-imputer = SimpleImputer(strategy= 'mean')
-imputer.fit(raw_df[numeric_cols])
-## Overwrite the numeric columns of the data columns
-train_inputs[numeric_cols] = imputer.transform(train_inputs[numeric_cols])
-val_inputs[numeric_cols] = imputer.transform(val_inputs[numeric_cols])
-test_inputs[numeric_cols] = imputer.transform(test_inputs[numeric_cols])
+##  helper function to generate predictions,
+##  compute the accuracy score and plot a confusion matrix
+def predict_and_plot(inputs, targets, name=''):
+    preds = model.predict(inputs)
+    
+    accuracy = accuracy_score(targets, preds)
+    print("Accuracy: {:.2f}%".format(accuracy * 100))
+    
+    cf = confusion_matrix(targets, preds, normalize='true')
+    plt.figure()
+    sns.heatmap(cf, annot=True)
+    plt.xlabel('Prediction')
+    plt.ylabel('Target')
+    plt.title('{} Confusion Matrix'.format(name));
+    
+    plt.show()
 
-## Scaling
-scaler = MinMaxScaler()
-scaler.fit(raw_df[numeric_cols])
+    return preds
 
-train_inputs[numeric_cols] = scaler.transform(train_inputs[numeric_cols])
-val_inputs[numeric_cols] = scaler.transform(val_inputs[numeric_cols])
-test_inputs[numeric_cols] = scaler.transform(test_inputs[numeric_cols])
+def random_guess(inputs):
+    return np.random.choice(["No", "Yes"], len(inputs))
 
-## One Hot Encoding
-encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
-encoder.fit(raw_df[categorical_cols])
-encoded_cols = list(encoder.get_feature_names_out(categorical_cols))
+def all_no(inputs):
+    return np.full(len(inputs), "No")
 
-train_inputs[encoded_cols] = encoder.transform(train_inputs[categorical_cols])
-val_inputs[encoded_cols] = encoder.transform(val_inputs[categorical_cols])
-test_inputs[encoded_cols] = encoder.transform(test_inputs[categorical_cols])
+def predict_input(single_input):
+    input_df = pd.DataFrame([single_input])
+    input_df[numeric_cols] = imputer.transform(input_df[numeric_cols])
+    input_df[numeric_cols] = scaler.transform(input_df[numeric_cols])
+    input_df[encoded_cols] = encoder.transform(input_df[categorical_cols])
 
+    X_input = input_df[numeric_cols + encoded_cols]
+
+    pred = model.predict(X_input)[0]
+    prob = float(model.predict_proba(X_input)[0][list(model.classes_).index(pred)])
+    return pred, prob
 
 if __name__ == "__main__":
 
     
+    # print(numeric_cols + encoded_cols)
+    # print(model.coef_.tolist())
+    # print(model.intercept_)
 
-    # print('test_df.shape: ', test_df.shape)
+    # Train set
+    # train_preds = predict_and_plot(X_train, train_targets, 'Training')
 
-    # print(list(imputer.statistics_))
+    # Validation set
+    # val_preds = predict_and_plot(X_val, val_targets, 'Validation')
 
-    # print(train_inputs[numeric_cols].describe())
+    # Test set
+    # train_preds = predict_and_plot(X_test, test_targets, 'Testing')
 
-    # Check missing values
-    # print(train_inputs[numeric_cols].isna().sum())
+    # print(accuracy_score(test_targets, random_guess(X_test)))
+    # print(accuracy_score(test_targets, all_no(X_test)))
 
-    # print(encoder.categories_)
-
-    print(test_inputs)
+    new_input = {'Date': '2021-06-19',
+             'Location': 'Katherine',
+             'MinTemp': 23.2,
+             'MaxTemp': 33.2,
+             'Rainfall': 10.2,
+             'Evaporation': 4.2,
+             'Sunshine': np.nan,
+             'WindGustDir': 'NNW',
+             'WindGustSpeed': 52.0,
+             'WindDir9am': 'NW',
+             'WindDir3pm': 'NNE',
+             'WindSpeed9am': 13.0,
+             'WindSpeed3pm': 20.0,
+             'Humidity9am': 89.0,
+             'Humidity3pm': 58.0,
+             'Pressure9am': 1004.8,
+             'Pressure3pm': 1001.5,
+             'Cloud9am': 8.0,
+             'Cloud3pm': 5.0,
+             'Temp9am': 25.7,
+             'Temp3pm': 33.0,
+             'RainToday': 'Yes'}
+    
+    new_input2 = {'Date': '2021-06-19',
+             'Location': 'Launceston',
+             'MinTemp': 23.2,
+             'MaxTemp': 33.2,
+             'Rainfall': 10.2,
+             'Evaporation': 4.2,
+             'Sunshine': np.nan,
+             'WindGustDir': 'NNW',
+             'WindGustSpeed': 52.0,
+             'WindDir9am': 'NW',
+             'WindDir3pm': 'NNE',
+             'WindSpeed9am': 13.0,
+             'WindSpeed3pm': 20.0,
+             'Humidity9am': 89.0,
+             'Humidity3pm': 58.0,
+             'Pressure9am': 1004.8,
+             'Pressure3pm': 1001.5,
+             'Cloud9am': 8.0,
+             'Cloud3pm': 5.0,
+             'Temp9am': 25.7,
+             'Temp3pm': 33.0,
+             'RainToday': 'Yes'}
+    
+    print(predict_input(new_input2))
 
     print('------------------------------')
