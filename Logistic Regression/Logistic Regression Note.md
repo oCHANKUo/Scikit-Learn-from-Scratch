@@ -82,3 +82,22 @@ When considering time series data like this, which involves data over a long per
 Origin - 2014: Train
 2015: Validation
 2016 - 2017: Testing
+
+2. Identify Input and Target Columns
+> "Date" column can be disregarded since its a model aimed for the future, and the Date column serves no purpose
+> MinTemp, MaxTemp matters...similarly understand which columns are useful and which are not
+> RainTomorrow column is the Target. Should not be used as an Input.
+> Logistic Regression expects you to have a single Target
+> InputColumns list and the TargetColumn are created.
+
+> Create seperate data frames for inputs and targets (train, val and test, all)
+
+> Identify Numeric and Categoric columns. After differentiating them, you can use .describe() function to view the statistics.
+
+3. Impute/Fill Missing Numeric Data
+> There are several techniques for imputation, but we will use the most basic. Replacing missing values with the average value in the column using SimpleImpute class.
+
+4. Scale Features to a Small Range of Values
+> e.g.(0,1) or (-1,1)
+> Scaling numeric features ensures that no particular feature has a dispropotionate impact on the models loss.
+> Use a MinMaxScaler from sklearn
