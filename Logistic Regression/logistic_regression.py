@@ -7,7 +7,7 @@ import seaborn as sns
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 
 data_dir = 'weather-dataset-rattle-package'
 train_csv = data_dir + '/weatherAUS.csv'
@@ -56,6 +56,15 @@ train_inputs[numeric_cols] = scaler.transform(train_inputs[numeric_cols])
 val_inputs[numeric_cols] = scaler.transform(val_inputs[numeric_cols])
 test_inputs[numeric_cols] = scaler.transform(test_inputs[numeric_cols])
 
+## One Hot Encoding
+encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+encoder.fit(raw_df[categorical_cols])
+encoded_cols = list(encoder.get_feature_names_out(categorical_cols))
+
+train_inputs[encoded_cols] = encoder.transform(train_inputs[categorical_cols])
+val_inputs[encoded_cols] = encoder.transform(val_inputs[categorical_cols])
+test_inputs[encoded_cols] = encoder.transform(test_inputs[categorical_cols])
+
 
 if __name__ == "__main__":
 
@@ -69,5 +78,9 @@ if __name__ == "__main__":
 
     # Check missing values
     # print(train_inputs[numeric_cols].isna().sum())
+
+    # print(encoder.categories_)
+
+    print(test_inputs)
 
     print('------------------------------')

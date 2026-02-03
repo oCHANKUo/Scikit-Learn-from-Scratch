@@ -101,3 +101,6 @@ Origin - 2014: Train
 > e.g.(0,1) or (-1,1)
 > Scaling numeric features ensures that no particular feature has a dispropotionate impact on the models loss.
 > Use a MinMaxScaler from sklearn
+
+5. Encoding Categorical Data
+> Since machine learning models can only be trained with numeric data, we need to convert catgorical data to numbers. A common technique is *one-hot encoding*
