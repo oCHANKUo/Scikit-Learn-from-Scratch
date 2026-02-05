@@ -10,8 +10,8 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
-from logistic_regression_preprocessing import categorical_cols, numeric_cols, encoded_cols, imputer, scaler, encoder
-
+from logistic_regression_preprocessing import categorical_cols, numeric_cols, encoded_cols, imputer, scaler, encoder, input_cols, target_col
+import joblib
 
 target_col = 'RainTomorrow'
 
@@ -67,6 +67,27 @@ def predict_input(single_input):
     pred = model.predict(X_input)[0]
     prob = float(model.predict_proba(X_input)[0][list(model.classes_).index(pred)])
     return pred, prob
+
+## Saving and Loading a model
+# Create a dictionary with all the required objects
+aussie_rain = {
+    'model':model,
+    'imputer': imputer,
+    'scaler': scaler,
+    'encoder': encoder,
+    'input_cols': input_cols,
+    'target_col': target_col,
+    'numeric_cols': numeric_cols,
+    'categorical_cols': categorical_cols,
+    'encoded_cols': encoded_cols
+}
+
+## Save
+# joblib.dump(aussie_rain, 'aussie_rain.joblib')
+
+## Load
+# aussie_rain2 = joblib.load('aussie_rain.joblib')
+# test_preds2 = aussie_rain2['model'].predict(X_test)
 
 if __name__ == "__main__":
 
@@ -133,6 +154,6 @@ if __name__ == "__main__":
              'Temp3pm': 33.0,
              'RainToday': 'Yes'}
     
-    print(predict_input(new_input2))
+    # print(predict_input(new_input2))
 
     print('------------------------------')

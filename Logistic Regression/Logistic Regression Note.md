@@ -127,6 +127,10 @@ Origin - 2014: Train
 -- Scaling numerical features using the scaler created earlier
 -- Encoding categorical features using the encoder created earlier
 
+9. Saving and Loading Trained Models
+> We can save the parameters (weights and biases) of our trained model to disk, so that we dont need to retrain the model from scratch each time we wish to use it.Along with the model, it's also important to save imputers, scalers, encoders and even column names. Anything that will be required while generating predictions using the model should be saved.
+> We can use Joblib
+> First create a dictionary containing all the required objects
 
 ## Exercise
 Initialize the LogisticRegression model with different arguments and try to achieve a higher accuracy. The arguments used for initializing the model are called hyperparameters (to differentiate them from weights and biases - parameters that are learned by the model during training).
