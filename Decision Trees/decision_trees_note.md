@@ -39,3 +39,13 @@ https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
         train_inputs = pd.concat([train_inputs, train_encoded], axis=1)
 
 7. drop the textual categorical columns, so that we're left with just numeric data. Such as Location name
+
+## Model Fitting and Predictions
+> from sklearn.tree import DecisionTreeClassifier
+> model = DecisionTreeClassifier(random_state=42)
+> model.fit(X_train, train_targets)
+> train_preds = model.predict(X_train)
+> train_probs = model.predict_proba(X_train)
+> print(accuracy_score(train_targets, train_preds))
+> Accuracy Score = 0.9999797955307714. Training set accuracy is 99%.
+> print(model.score(X_val, val_targets)) : Make predictions and calculates accuracy in one step. Acc_score = 0.7914804712436887
