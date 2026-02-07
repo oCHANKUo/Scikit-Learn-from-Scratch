@@ -49,3 +49,10 @@ https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
 > print(accuracy_score(train_targets, train_preds))
 > Accuracy Score = 0.9999797955307714. Training set accuracy is 99%.
 > print(model.score(X_val, val_targets)) : Make predictions and calculates accuracy in one step. Acc_score = 0.7914804712436887
+
+> Although the training accuracy is 100%, the accuracy on the validation set is just about 79%.
+> It appears that the model has learned the training examples perfect, and doesn't generalize well to previously unseen examples. This phenomenon is called "overfitting".
+
+## Decision Tree Visualisation
+> We can visualize the decision tree learned from the training data.
+> from sklearn.tree import plot_tree, export_text
