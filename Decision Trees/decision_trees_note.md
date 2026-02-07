@@ -58,3 +58,11 @@ https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
 > from sklearn.tree import plot_tree, export_text
 > Note the *gini* value in each box. This is the loss function used by the decision tree to decide which column should be used for splitting the data, and at what point the column should be split. A lower Gini index indicates a better split. A perfect split (only one class on each side) has a Gini index of 0.
 > Based on the gini index computations, a decision tree assigns an "importance" value to each feature
+
+## Hyperparameter Tuning and Overfitting
+> The DecisionTreeClassifier accepts several arguments, some of which can be modified to reduce overfitting.
+> These arguments are called hyperparameters because they must be configured manually (as opposed to the parameters within the model which are learned from the data.)
+
+1. **max_depth**
+> By reducing the maximum depth of the decision tree, we can prevent the tree from memorizing all training examples, which may lead to better generalization
+> model = DecisionTreeClassifier(max_depth=3, random_state=42) : while the training accuracy score of the model has gone down, the validation accuracy of the model has increased significantly.
