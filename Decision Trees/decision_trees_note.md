@@ -56,3 +56,5 @@ https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
 ## Decision Tree Visualisation
 > We can visualize the decision tree learned from the training data.
 > from sklearn.tree import plot_tree, export_text
+> Note the *gini* value in each box. This is the loss function used by the decision tree to decide which column should be used for splitting the data, and at what point the column should be split. A lower Gini index indicates a better split. A perfect split (only one class on each side) has a Gini index of 0.
+> Based on the gini index computations, a decision tree assigns an "importance" value to each feature
