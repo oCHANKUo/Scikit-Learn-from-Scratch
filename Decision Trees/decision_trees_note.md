@@ -66,3 +66,13 @@ https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
 1. **max_depth**
 > By reducing the maximum depth of the decision tree, we can prevent the tree from memorizing all training examples, which may lead to better generalization
 > model = DecisionTreeClassifier(max_depth=3, random_state=42) : while the training accuracy score of the model has gone down, the validation accuracy of the model has increased significantly.
+> Max_depth = 7 is the optimal
+
+2. **max_leaf_nodes**
+>  Control the size of complexity of a decision tree by limiting the number of leaf nodes. > This allows branches of the tree to have varying depths.
+>    model = DecisionTreeClassifier(max_leaf_nodes=128, random_state=42).fit(X_train, train_targets)
+
+**optimal max-depth and max-leaf-nodes**
+Max Depth            10.000000
+Max Leaf Nodes      256.000000
+Validation Error      0.154199

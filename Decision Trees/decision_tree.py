@@ -10,7 +10,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from preprocessing import X_train, train_targets, X_val, val_targets
 
-model = DecisionTreeClassifier(random_state=42)
+model = DecisionTreeClassifier(max_depth=10, max_leaf_nodes=256, random_state=42)
 
 model.fit(X_train, train_targets)
 
