@@ -86,3 +86,11 @@ Validation Error      0.154199
 2. How to use in code?
 > We'll use the RandomForestClassifier class from sklearn.ensemble
 > from sklearn.ensemble import RandomForestClassifier
+
+3. 
+> Train Score: 0.9999595910615429
+> Validation Score: 0.8560733561604086
+> Validation accuracy is much better than before
+
+4. Just like decision tree, random forests also assign an "importance" to each feature, by combining the importance values from individual trees.
+> Notice that the distribution is a lot less skewed than that for a single decision tree.
