@@ -94,3 +94,49 @@ Validation Error      0.154199
 
 4. Just like decision tree, random forests also assign an "importance" to each feature, by combining the importance values from individual trees.
 > Notice that the distribution is a lot less skewed than that for a single decision tree.
+
+5. Random Forest **Hyperparameters**
+> https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+> Base model Accuracy:  (0.9999595910615429, 0.8560733561604086)
+> **n_estimators**: Controls the number of decision trees in the random forest. Default = 100. Try to have as few as needed.
+> n_estimator Accuracy 10:  (0.987331797793672, 0.8431896001392839)
+> n_estimator Accuracy 500:  (0.9999797955307714, 0.8571179850269862)
+
+> **max_features**: We can specify the features to be chosen randomly
+>  default value auto causes only sqrt(n) out of total features (n) to be chosen randomly at each split.
+> max_features_log2:  (0.9999494888269285, 0.8558992513493123)
+> max_features_3:  (0.9999393865923142, 0.8511984214497127)
+> max_features_6:  (0.9999494888269285, 0.8558992513493123)
+
+> **max_depth** and **max_leaf_nodes**
+> Controls the max depth and max nodes for each tree. By default, no max depth.
+> max_depth = 5: (0.8197559300117186, 0.8239800359816609)
+> max_depth=25: (0.9773810966985897, 0.8560733561604086)
+> max_leaf_nodes = 2**5 : (0.8313937042873883, 0.8335558005919563)
+> max_leaf_nodes = 2**20 : (0.9999595910615429, 0.8558992513493123)
+
+> **min_samples_split** and **min_samples_leaf**
+> By default, the decision tree classifier tries to split every node that has 2 or more
+> min_samples_split=3, min_samples_leaf=2: (0.9625813229886451, 0.8571760199640184)
+> min_samples_split=100, min_samples_leaf=60: (0.8501333494969087, 0.8454529626835355)
+
+> **min_impurity_decrease**
+> Used to control the threshold for splitting nodes
+> A node will be split if this split induces a decrease of the impurity (Gini index) greater than or equal to this value. (default = 0)
+> min_impurity_decrease=1e-6: (0.9889077463935022, 0.8564215657826011)
+> min_impurity_decrease=1e-2: (0.774891906089627, 0.7882885497069235)
+
+> **bootstrap, max_samples**
+> By default, a random forest doesn't use the entire dataset for training each decision tree. Instead it applies a technique called bootstrapping.
+> Bootstrapping helps the random forest generalize better, because each decision tree only sees a fraction of th training set, and some rows randomly get higher weightage than others.
+> bootstap=False: (0.9999797955307714, 0.8570599500899542)
+
+> When bootstrapping is enabled, you can also control the number or fraction of rows to be considered for each bootstrap using max_samples
+> max_samples=0.9: 0.9997777508384855, 0.8567117404677616
+
+> **class_weight**
+> class_weight='balanced': 0.9999595910615429, 0.8557831814752481
+> class_weight={'No': 1, 'Yes': 2}: (0.9999494888269285, 0.8531716093088039)
+
+> **Putting it all together**
+> model = RandomForestClassifier(n_jobs=-1, random_state=42, n_estimators=500, max_features=7, max_depth=30, class_weight={'No': 1, 'Yes': 1.5}): (0.9920596435931628, 0.8564215657826011)
