@@ -119,5 +119,8 @@ if __name__ == "__main__":
     # plot_tree(tree, max_depth=3, filled=True, feature_names=numeric_cols+encoded_cols)
     # plt.show()
 
-    print(try_model(rf))
+    # print(try_model(rf))
+
+    '''Feature Importance'''
+    print(rf.feature_importances_)
     print('------------------')
