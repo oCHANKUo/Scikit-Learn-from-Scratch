@@ -6,7 +6,12 @@ from data_preprocess import merged_df, merged_test_df
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.metrics import root_mean_squared_error
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, SGDRegressor
+from sklearn.tree import DecisionTreeRegressor, plot_tree
+from sklearn.ensemble import RandomForestRegressor
+import matplotlib.pyplot as plt
+
+print("Script started")
 
 train_size = int(.75 * len(merged_df))
 
@@ -66,9 +71,25 @@ train_preds2 = guess_random(X_train)
 '''Baseline Model'''
 linreg = LinearRegression()
 linreg.fit(X_train, train_targets)
-train_preds = linreg.predict(X_train)
+train_preds3 = linreg.predict(X_train)
+val_preds3 = linreg.predict(X_val)
 
-val_preds = linreg.predict(X_val)
+'''Function to try model'''
+def try_model(model):
+    model.fit(X_train, train_targets)
+
+    train_preds = model.predict(X_train)
+    val_preds = model.predict(X_val)
+
+    train_rmse = root_mean_squared_error(train_targets, train_preds)
+    val_rmse = root_mean_squared_error(val_targets, val_preds)
+    return train_rmse, val_rmse
+
+'''Decision Tree'''
+tree = DecisionTreeRegressor(random_state=42)
+
+'''Random Forest'''
+rf = RandomForestRegressor(random_state=42, n_jobs=-1)
 
 if __name__ == "__main__":
 
@@ -83,6 +104,20 @@ if __name__ == "__main__":
     # print(root_mean_squared_error(train_preds2, train_targets))
     # print(root_mean_squared_error(guess_random(X_val), val_targets))
 
-    print(root_mean_squared_error(train_preds, train_targets))
-    print(root_mean_squared_error(val_preds, val_targets))
+    # print(root_mean_squared_error(train_preds3, train_targets))
+    # print(root_mean_squared_error(val_preds3, val_targets))
+
+    '''Trying out different models'''
+    # print(try_model(LinearRegression()))
+    # print(try_model(Ridge()))
+    # print(try_model(Lasso()))
+    # print(try_model(ElasticNet()))
+    # print(try_model(SGDRegressor()))
+
+    # print(try_model(tree))
+    # plt.figure(figsize=(16, 8))
+    # plot_tree(tree, max_depth=3, filled=True, feature_names=numeric_cols+encoded_cols)
+    # plt.show()
+
+    print(try_model(rf))
     print('------------------')
