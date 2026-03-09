@@ -2,6 +2,8 @@ import os
 import opendatasets as od
 import pandas as pd
 from data_prep import merged_df, merged_test_df
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import OneHotEncoder
 
 '''Convert Date to datecolumn to extract different parts of the data'''
 def split_date(df):
@@ -76,6 +78,21 @@ max_distance = inputs.CompetitionDistance.max()
 inputs['CompetitionDistance'].fillna(max_distance, inplace=True)
 test_inputs['CompetitionDistance'].fillna(max_distance, inplace=True)
 
+''' Scaling '''
+scaler = MinMaxScaler().fit(inputs[numeric_cols])
+
+inputs[numeric_cols] = scaler.transform(inputs[numeric_cols])
+test_inputs[numeric_cols] = scaler.transform(test_inputs[numeric_cols])
+
+''' Encoding '''
+encoder = OneHotEncoder(sparse=False, handle_unknown='ignore').fit(inputs[categorical_cols])
+encoded_cols = list(encoder.get_feature_names_out(categorical_cols))
+inputs[encoded_cols] = encoder.transform(inputs[categorical_cols])
+test_inputs[encoded_cols] = encoder.transform(test_inputs[categorical_cols])
+
+''' Extracting Numeric Data for Training (No validation set  since we are using K Fold cross validation)'''
+X = inputs[numeric_cols + encoded_cols]
+X_test = test_inputs[numeric_cols + encoded_cols]
 
 
 if __name__ == "__main__":
