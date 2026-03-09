@@ -11,6 +11,7 @@ def split_date(df):
     df['Year'] = df.Date.dt.year
     df['Month'] = df.Date.dt.month
     df['WeekOfYear'] = df.Date.dt.isocalendar().week
+    df['Day'] = df.Date.dt.day
 
 split_date(merged_df)
 split_date(merged_test_df)
@@ -75,8 +76,8 @@ test_inputs[numeric_cols].isna().sum()
 ''' competition distance is the only missing value, and we can simply fill it with the highest value (to indicate that competition is very far away).'''
 max_distance = inputs.CompetitionDistance.max()
 
-inputs['CompetitionDistance'].fillna(max_distance, inplace=True)
-test_inputs['CompetitionDistance'].fillna(max_distance, inplace=True)
+inputs['CompetitionDistance'] = inputs['CompetitionDistance'].fillna(max_distance)
+test_inputs['CompetitionDistance'] = test_inputs['CompetitionDistance'].fillna(max_distance)
 
 ''' Scaling '''
 scaler = MinMaxScaler().fit(inputs[numeric_cols])
@@ -85,7 +86,7 @@ inputs[numeric_cols] = scaler.transform(inputs[numeric_cols])
 test_inputs[numeric_cols] = scaler.transform(test_inputs[numeric_cols])
 
 ''' Encoding '''
-encoder = OneHotEncoder(sparse=False, handle_unknown='ignore').fit(inputs[categorical_cols])
+encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore').fit(inputs[categorical_cols])
 encoded_cols = list(encoder.get_feature_names_out(categorical_cols))
 inputs[encoded_cols] = encoder.transform(inputs[categorical_cols])
 test_inputs[encoded_cols] = encoder.transform(test_inputs[categorical_cols])
