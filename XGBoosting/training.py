@@ -122,6 +122,9 @@ if __name__ == "__main__":
 
     ''' Final '''
     # model.fit(X, targets)
-    # print(test_preds = model.predict(X_test))
+    # print(model.predict(X_test))
+    test_params(n_estimators=1000, 
+                     learning_rate=0.2, max_depth=10, subsample=0.9, 
+                     colsample_bytree=0.7)
    
     print("--------------------")
