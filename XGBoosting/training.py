@@ -107,9 +107,21 @@ if __name__ == "__main__":
     # test_params(n_estimators=50, learning_rate=0.99)
     # test_params(booster='gblinear')
 
+    ''' max depth '''
+    # test_params(max_depth=5)
+    # test_params(max_depth=10)
+
+    ''' Learning Rate: Scaling factor applied to the prediction of each tree. High learning rate = overfitting '''
+    # test_params(n_estimators=50, learning_rate=0.01)
+    # test_params(n_estimators=50, learning_rate=0.1)
+    # test_params(n_estimators=50, learning_rate=0.99)
+
+    ''' Booster: Instead of decision trees, we can also train a linear model (even though its not well suited) '''
+    # test_params(booster='gblinear')
+
 
     ''' Final '''
-    model.fit(X, targets)
-    print(test_preds = model.predict(X_test))
+    # model.fit(X, targets)
+    # print(test_preds = model.predict(X_test))
    
     print("--------------------")
