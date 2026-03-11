@@ -54,3 +54,9 @@ Some observations about the test set:
 - Pickup dates range from Jan 1st 2009 to Jun  30th 2015 (same as training set)
 
 We can use the ranges of the test set to drop outliers/invalid data from the training set.
+
+
+## 4. Train Hardcoded & Baseline Models
+
+- Hardcoded model: always predict average fare
+- Baseline model: Linear regression 

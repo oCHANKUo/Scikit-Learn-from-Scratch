@@ -28,6 +28,6 @@ test_inpts = test_df[input_cols]
 
 if __name__ == "__main__":
 
-    print(len(train_df), len(val_df))
+    # print(len(train_df), len(val_df))
 
     print("--------------")
