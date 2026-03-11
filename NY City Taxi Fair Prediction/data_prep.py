@@ -28,7 +28,8 @@ df = pd.read_csv(data_dir+"/train.csv",
                  usecols=selected_cols,
                  dtype=dtypes,
                  parse_dates=['pickup_datetime'],
-                 skiprows=skip_row)
+                 skiprows=skip_row, 
+                 encoding="latin1")
 
 test_df = pd.read_csv(data_dir+'/test.csv', 
                       dtype=dtypes, 

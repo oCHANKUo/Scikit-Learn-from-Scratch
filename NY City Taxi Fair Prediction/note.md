@@ -96,3 +96,12 @@ There seems to be some invalide data in each of the following columns:
 - Passenger count
 - Pickup latitude & longitude
 - Drop latitude & longitude
+
+
+## 7. Train & Evaluate Different Models
+
+We'll train each of the following & submit predictions to Kaggle:
+
+- Linear Regression
+- Random Forests
+- Gradient Boosting
