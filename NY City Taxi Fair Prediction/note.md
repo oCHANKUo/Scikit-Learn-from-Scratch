@@ -60,3 +60,39 @@ We can use the ranges of the test set to drop outliers/invalid data from the tra
 
 - Hardcoded model: always predict average fare
 - Baseline model: Linear regression 
+
+
+## 5. Make Predictions and Submit to Kaggle
+
+- Make predictions for test set
+- Generate submissions CSV
+- Submit to Kaggle
+- Record in experiment tracking sheet
+
+
+## 6. Feature Engineering
+
+
+- Extract parts of date
+- Remove outliers & invalid data
+- Add distance between pickup & drop
+- Add distance from landmarks
+
+
+### Add Distance From Popular Landmarks
+
+- JFK Airport
+- LGA Airport
+- EWR Airport
+- Times Square
+- Met Meuseum
+- World Trade Center
+
+### Remove Outliers and Invalid Data
+
+There seems to be some invalide data in each of the following columns:
+
+- Fare amount
+- Passenger count
+- Pickup latitude & longitude
+- Drop latitude & longitude
