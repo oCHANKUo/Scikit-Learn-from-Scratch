@@ -10,7 +10,6 @@
 ## Observations:
 
 - This is a supervised learning regression problem
-- Training data is 5.5 GB in size
 - Training data has 5.5 million rows
 - Test set is much smaller (< 10,000 rows)
 - The training set has 8 columns:
