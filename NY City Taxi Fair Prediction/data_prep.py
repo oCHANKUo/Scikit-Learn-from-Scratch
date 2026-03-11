@@ -37,6 +37,12 @@ test_df = pd.read_csv(data_dir+'/test.csv',
 if __name__ == "__main__":
 
     # print(df)
-    print(test_df)
+    # print(test_df)
+
+    # print(df.info())
+    # print(df.describe())
+
+    # print(test_df.info())
+    # print(test_df.describe())
 
     print("--------------")
